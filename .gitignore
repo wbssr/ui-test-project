@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# 日志和报告
+logs/
+reports/
+
+# 截图
+screenshots/
+
+# 虚拟环境
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
