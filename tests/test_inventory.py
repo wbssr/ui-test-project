@@ -10,7 +10,6 @@ class TestInventory:
         login_page = LoginPage(driver)
         login_page.login(settings.USERNAME, settings.PASSWORD)
 
-    @pytest.mark.smoke
     def test_sort_products(self, driver):
         inventory = InventoryPage(driver)
         inventory.sort_by_price_low_to_high()
