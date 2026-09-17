@@ -96,5 +96,12 @@ allure serve reports/allure-results
 
 - Allure 可视化报告
 
+### CI/CD
+
+项目配置了 GitHub Actions，代码提交后自动运行 UI 测试。
+
+- 自动安装 Chrome 浏览器
+- 自动安装 Python 依赖
+- 在 headless 模式下执行全部 UI 测试用例
 ## 作者
 luoqing
