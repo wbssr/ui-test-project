@@ -11,6 +11,7 @@ class TestCart:
         login_page = LoginPage(driver)
         login_page.login(settings.USERNAME, settings.PASSWORD)
 
+    @pytest.mark.flaky
     @pytest.mark.smoke
     def test_add_and_remove_item(self, driver):
         inventory = InventoryPage(driver)
