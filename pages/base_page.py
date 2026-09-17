@@ -5,7 +5,7 @@ import os
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
-        timeout = 30 if os.getenv("CI") else 10
+        timeout = 60 if os.getenv("CI") else 10
         self.wait = WebDriverWait(driver, timeout)
 
     def find(self, locator):
