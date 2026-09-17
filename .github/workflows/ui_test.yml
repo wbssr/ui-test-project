@@ -30,5 +30,21 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run UI tests
+      env:
+        CI: true
       run: |
-        pytest tests/ -v
+        pytest tests/ -v --alluredir=allure-results
+
+    - name: Generate Allure Report
+      if: always()
+      uses: simple-elf/allure-report-action@master
+      with:
+        allure_results: allure-results
+        allure_report: allure-report
+
+    - name: Upload Allure Report
+      if: always()
+      uses: actions/upload-artifact@v6
+      with:
+        name: allure-report
+        path: allure-report/
