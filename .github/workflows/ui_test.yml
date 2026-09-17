@@ -33,7 +33,7 @@ jobs:
       env:
         CI: true
       run: |
-        pytest tests/ -v -m flaky --alluredir=allure-results
+        pytest tests/ -v -m "not flaky" --alluredir=allure-results
 
     - name: Generate Allure Report
       if: always()
