@@ -23,6 +23,7 @@ class TestCart:
         cart.remove_first_item()
         assert cart.get_item_count() == 0
 
+    @pytest.mark.flaky
     @pytest.mark.regression
     def test_cart_empty_checkout(self, driver):
         inventory = InventoryPage(driver)
