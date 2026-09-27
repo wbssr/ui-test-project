@@ -2,7 +2,7 @@ import pytest
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from config.settings import settings
-
+from pages.cart_page import CartPage
 class TestInventory:
 
     @pytest.fixture(autouse=True)
@@ -27,7 +27,5 @@ class TestInventory:
         inventory.add_backpack_to_cart()
         inventory.add_second_item_to_cart()
         inventory.go_to_cart()
-
-        from pages.cart_page import CartPage
         cart = CartPage(driver)
         assert cart.get_item_count() == 2

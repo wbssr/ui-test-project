@@ -1,9 +1,10 @@
 import logging
 import os
-
+from datetime import datetime
 def get_logger():
-    if not os.path.exists("logs"):
-        os.makedirs("logs")
+    log_dir="logs"
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
 
     logger = logging.getLogger("ui_test")
     logger.setLevel(logging.INFO)
@@ -12,8 +13,9 @@ def get_logger():
     console = logging.StreamHandler()
     console.setLevel(logging.INFO)
 
+    file_name=f"{log_dir}/test_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     # 文件输出
-    file_handler = logging.FileHandler("logs/ui_test.log", encoding="utf-8")
+    file_handler = logging.FileHandler(file_name, encoding="utf-8")
     file_handler.setLevel(logging.INFO)
 
     formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
