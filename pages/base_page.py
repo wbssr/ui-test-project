@@ -23,4 +23,5 @@ class BasePage:
         element.send_keys(text)
 
     def get_text(self, locator):
-        return self.find(locator).text
+        element = self.wait.until(EC.visibility_of_element_located(locator))
+        return element.text

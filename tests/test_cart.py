@@ -15,12 +15,14 @@ class TestCart:
     @pytest.mark.smoke
     def test_add_and_remove_item(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_backpack_to_cart()
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
         inventory.go_to_cart()
 
         cart = CartPage(driver)
+        cart.wait_item_count(1)
         assert cart.get_item_count() == 1
-        cart.remove_first_item()
+        cart.remove_item_by_name("Sauce Labs Backpack")
+        cart.wait_item_count(0)
         assert cart.get_item_count() == 0
 
     @pytest.mark.flaky
@@ -30,4 +32,4 @@ class TestCart:
         inventory.go_to_cart()
         cart = CartPage(driver)
         # 空购物车点结账应该跳回或提示，这里验证页面可操作
-        assert cart.is_loaded() == True
+        assert cart.is_loaded()

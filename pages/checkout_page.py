@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -22,4 +23,8 @@ class CheckoutPage(BasePage):
         return self.get_text(self.COMPLETE_HEADER)
 
     def is_loaded(self):
-        return len(self.driver.find_elements(*self.CONTINUE_BUTTON)) > 0
+        try:
+            self.find(self.CONTINUE_BUTTON)
+            return True
+        except TimeoutException:
+            return False

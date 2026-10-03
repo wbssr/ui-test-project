@@ -13,19 +13,21 @@ class TestInventory:
     def test_sort_products(self, driver):
         inventory = InventoryPage(driver)
         inventory.sort_by_price_low_to_high()
-        assert inventory.is_loaded() == True
+        prices = inventory.get_product_prices()  # 需要在页面类加这个方法
+        assert prices == sorted(prices)
 
     @pytest.mark.regression
     def test_page_title(self, driver):
         inventory = InventoryPage(driver)
-        assert inventory.is_loaded() == True
+        assert inventory.is_loaded()
 
     @pytest.mark.flaky
     @pytest.mark.regression
     def test_add_two_products(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_backpack_to_cart()
-        inventory.add_second_item_to_cart()
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Bike Light")
         inventory.go_to_cart()
         cart = CartPage(driver)
+        cart.wait_item_count(2)
         assert cart.get_item_count() == 2

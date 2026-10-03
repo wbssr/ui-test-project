@@ -16,7 +16,7 @@ class TestCheckout:
     @pytest.mark.smoke
     def test_complete_checkout(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_backpack_to_cart()
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
         inventory.go_to_cart()
 
         cart = CartPage(driver)
@@ -32,7 +32,7 @@ class TestCheckout:
     @pytest.mark.regression
     def test_checkout_missing_info(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_backpack_to_cart()
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
         inventory.go_to_cart()
 
         cart = CartPage(driver)
@@ -41,13 +41,13 @@ class TestCheckout:
         checkout = CheckoutPage(driver)
         checkout.fill_info("", "", "")
         # 缺少信息时继续，会停在当前页，简单断言页面元素还在
-        assert checkout.is_loaded() == True
+        assert checkout.is_loaded()
 
     @pytest.mark.flaky
     @pytest.mark.regression
     def test_checkout_complete_header(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_backpack_to_cart()
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
         inventory.go_to_cart()
 
         cart = CartPage(driver)

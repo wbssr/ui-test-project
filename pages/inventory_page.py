@@ -4,16 +4,15 @@ from selenium.webdriver.support.ui import Select
 
 class InventoryPage(BasePage):
     PAGE_TITLE = (By.CLASS_NAME, "title")
-    ADD_TO_CART_BUTTON = (By.ID, "add-to-cart-sauce-labs-backpack")
     CART_LINK = (By.CLASS_NAME, "shopping_cart_link")
     SORT_DROPDOWN = (By.CLASS_NAME, "product_sort_container")
-    ADD_SECOND_ITEM = (By.ID, "add-to-cart-sauce-labs-bike-light")
+    PRICE = (By.CLASS_NAME, "inventory_item_price")
+    ITEM = (By.CLASS_NAME, "inventory_item")
+    ITEM_NAME = (By.CLASS_NAME, "inventory_item_name")
+    ADD_BUTTON = (By.CSS_SELECTOR, "button.btn_inventory")
 
     def is_loaded(self):
         return self.get_text(self.PAGE_TITLE) == "Products"
-
-    def add_backpack_to_cart(self):
-        self.click(self.ADD_TO_CART_BUTTON)
 
     def go_to_cart(self):
         self.click(self.CART_LINK)
@@ -21,5 +20,15 @@ class InventoryPage(BasePage):
     def sort_by_price_low_to_high(self):
         Select(self.find(self.SORT_DROPDOWN)).select_by_value("lohi")
 
-    def add_second_item_to_cart(self):
-        self.click(self.ADD_SECOND_ITEM)
+    def get_product_prices(self):
+        elements = self.driver.find_elements(*self.PRICE)
+        return [float(e.text.replace("$", "")) for e in elements]
+
+    def add_to_cart_by_name(self, product_name):
+        items = self.driver.find_elements(*self.ITEM)          # 所有商品卡片
+        for item in items:
+            name = item.find_element(*self.ITEM_NAME).text     # 卡片里的名字
+            if name == product_name:
+                item.find_element(*self.ADD_BUTTON).click()    # 点这张卡片的按钮
+                return
+        raise Exception(f"没找到商品: {product_name}")

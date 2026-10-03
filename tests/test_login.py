@@ -19,7 +19,7 @@ class TestLogin:
         login_page.login(user["username"], user["password"])
 
         inventory_page = InventoryPage(driver)
-        assert inventory_page.is_loaded() == True
+        assert inventory_page.is_loaded()
 
     @pytest.mark.regression
     @pytest.mark.parametrize("user", USERS_DATA["invalid_users"])
