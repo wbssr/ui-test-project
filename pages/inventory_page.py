@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from selenium.webdriver.support.ui import Select
-
+from utils.logger import logger
 class InventoryPage(BasePage):
     PAGE_TITLE = (By.CLASS_NAME, "title")
     CART_LINK = (By.CLASS_NAME, "shopping_cart_link")
@@ -15,7 +15,9 @@ class InventoryPage(BasePage):
         return self.get_text(self.PAGE_TITLE) == "Products"
 
     def go_to_cart(self):
+        logger.info(f"点击前 URL: {self.driver.current_url}")
         self.click(self.CART_LINK)
+        logger.info(f"点击后 URL: {self.driver.current_url}")  # ← 关键
 
     def sort_by_price_low_to_high(self):
         Select(self.find(self.SORT_DROPDOWN)).select_by_value("lohi")
