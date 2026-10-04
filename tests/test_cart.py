@@ -11,7 +11,6 @@ class TestCart:
         login_page = LoginPage(driver)
         login_page.login_success(settings.USERNAME, settings.PASSWORD)
 
-    @pytest.mark.flaky
     @pytest.mark.smoke
     def test_add_and_remove_item(self, driver):
         inventory = InventoryPage(driver)
@@ -26,7 +25,6 @@ class TestCart:
         cart.wait_item_count(0)
         assert cart.get_item_count() == 0
 
-    @pytest.mark.flaky
     @pytest.mark.regression
     def test_cart_empty_checkout(self, driver):
         inventory = InventoryPage(driver)

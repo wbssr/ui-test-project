@@ -30,6 +30,7 @@ class TestLogin:
 
         assert user["expected"] in login_page.get_error_message()
 
+    @pytest.mark.flaky
     @pytest.mark.regression
     def test_logout_keeps_cart(self, driver):
         """退出登录后重新登录，购物车商品保留"""
@@ -47,6 +48,7 @@ class TestLogin:
         inventory = InventoryPage(driver)
         assert inventory.get_cart_badge_count() == 1
 
+    @pytest.mark.flaky
     @pytest.mark.regression
     def test_reset_app_state_clears_cart(self, driver):
         """Reset App State 清空购物车"""

@@ -22,7 +22,6 @@ class TestInventory:
         inventory = InventoryPage(driver)
         assert inventory.is_loaded()
 
-    @pytest.mark.flaky
     @pytest.mark.regression
     def test_add_two_products(self, driver):
         inventory = InventoryPage(driver)

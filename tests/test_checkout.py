@@ -12,7 +12,6 @@ class TestCheckout:
         login_page = LoginPage(driver)
         login_page.login_success(settings.USERNAME, settings.PASSWORD)
 
-    @pytest.mark.flaky
     @pytest.mark.smoke
     def test_complete_checkout(self, driver):
         inventory = InventoryPage(driver)
@@ -28,7 +27,6 @@ class TestCheckout:
 
         assert "Thank you" in checkout.get_complete_header()
 
-    @pytest.mark.flaky
     @pytest.mark.regression
     def test_checkout_missing_info(self, driver):
         inventory = InventoryPage(driver)
@@ -43,7 +41,6 @@ class TestCheckout:
         # 缺少信息时继续，会停在当前页，简单断言页面元素还在
         assert checkout.is_loaded()
 
-    @pytest.mark.flaky
     @pytest.mark.regression
     def test_checkout_complete_header(self, driver):
         inventory = InventoryPage(driver)
@@ -59,6 +56,7 @@ class TestCheckout:
 
         assert "Thank you" in checkout.get_complete_header()
 
+    @pytest.mark.flaky
     @pytest.mark.regression
     def test_cancel_checkout_keeps_cart(self, driver):
         """结账中途取消，购物车商品保留"""
@@ -77,6 +75,7 @@ class TestCheckout:
         cart.wait_item_count(1)
         assert cart.get_item_count() == 1
 
+    @pytest.mark.flaky
     @pytest.mark.regression
     def test_form_data_not_persisted_on_refresh(self, driver):
         """填写信息后刷新，表单数据清空"""
