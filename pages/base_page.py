@@ -17,6 +17,10 @@ class BasePage:
         logger.info(f"点击元素: {locator}")
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
+    def click_visibility(self, locator):
+        logger.info(f"点击可见元素: {locator}")
+        self.wait.until(EC.visibility_of_element_located(locator)).click()
+
     def input_text(self, locator, text):
         logger.info(f"输入 {text} 到 {locator}")
         element = self.find(locator)

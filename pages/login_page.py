@@ -36,4 +36,4 @@ class LoginPage(BasePage):
 
     def reset_app_state(self):
         self.click(self.MENU_BUTTON)
-        self.click(self.RESET_LINK)
+        self.click_visibility(self.RESET_LINK)

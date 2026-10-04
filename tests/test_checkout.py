@@ -16,7 +16,7 @@ class TestCheckout:
     @pytest.mark.smoke
     def test_complete_checkout(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         inventory.go_to_cart()
 
         cart = CartPage(driver)
@@ -32,7 +32,7 @@ class TestCheckout:
     @pytest.mark.regression
     def test_checkout_missing_info(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         inventory.go_to_cart()
 
         cart = CartPage(driver)
@@ -47,7 +47,7 @@ class TestCheckout:
     @pytest.mark.regression
     def test_checkout_complete_header(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         inventory.go_to_cart()
 
         cart = CartPage(driver)
@@ -63,10 +63,11 @@ class TestCheckout:
     def test_cancel_checkout_keeps_cart(self, driver):
         """结账中途取消，购物车商品保留"""
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         inventory.go_to_cart()
 
         cart = CartPage(driver)
+        assert cart.is_loaded()
         cart.checkout()
 
         checkout = CheckoutPage(driver)
@@ -80,7 +81,7 @@ class TestCheckout:
     def test_form_data_not_persisted_on_refresh(self, driver):
         """填写信息后刷新，表单数据清空"""
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         inventory.go_to_cart()
 
         cart = CartPage(driver)

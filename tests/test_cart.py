@@ -15,7 +15,7 @@ class TestCart:
     @pytest.mark.smoke
     def test_add_and_remove_item(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         inventory.go_to_cart()
 
         cart = CartPage(driver)

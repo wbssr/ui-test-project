@@ -37,7 +37,7 @@ class TestLogin:
         login_page.login(settings.USERNAME, settings.PASSWORD)
 
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         assert inventory.get_cart_badge_count() == 1
 
         login_page.logout()
@@ -54,7 +54,7 @@ class TestLogin:
         login_page.login(settings.USERNAME, settings.PASSWORD)
 
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
         assert inventory.get_cart_badge_count() == 1
 
         login_page.reset_app_state()

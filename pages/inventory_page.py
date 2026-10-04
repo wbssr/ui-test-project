@@ -32,12 +32,13 @@ class InventoryPage(BasePage):
         elements = self.driver.find_elements(*self.PRICE)
         return [float(e.text.replace("$", "")) for e in elements]
 
-    def add_to_cart_by_name(self, product_name):
-        items = self.driver.find_elements(*self.ITEM)          # 所有商品卡片
+    def add_to_cart_by_name(self, product_name, expected_count=None):
+        items = self.driver.find_elements(*self.ITEM)                       #所有商品
         for item in items:
-            name = item.find_element(*self.ITEM_NAME).text     # 卡片里的名字
-            if name == product_name:
-                item.find_element(*self.ADD_BUTTON).click()    # 点这张卡片的按钮
+            if item.find_element(*self.ITEM_NAME).text == product_name:     #指定商品
+                item.find_element(*self.ADD_BUTTON).click()
+                if expected_count is not None:
+                    self.wait.until(lambda d: self.get_cart_badge_count() == expected_count)    #等角标
                 return
         raise Exception(f"没找到商品: {product_name}")
 

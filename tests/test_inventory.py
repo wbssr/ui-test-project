@@ -26,8 +26,8 @@ class TestInventory:
     @pytest.mark.regression
     def test_add_two_products(self, driver):
         inventory = InventoryPage(driver)
-        inventory.add_to_cart_by_name("Sauce Labs Backpack")
-        inventory.add_to_cart_by_name("Sauce Labs Bike Light")
+        inventory.add_to_cart_by_name("Sauce Labs Backpack",expected_count=1)
+        inventory.add_to_cart_by_name("Sauce Labs Bike Light",expected_count=2)
         inventory.go_to_cart()
 
         cart = CartPage(driver)
