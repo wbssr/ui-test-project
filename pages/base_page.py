@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.logger import logger
@@ -25,3 +26,13 @@ class BasePage:
     def get_text(self, locator):
         element = self.wait.until(EC.visibility_of_element_located(locator))
         return element.text
+
+    def is_element_present(self, locator, timeout=3):
+        """短时间内探测元素是否存在，不抛异常"""
+        try:
+            WebDriverWait(self.driver, timeout).until(
+                EC.presence_of_element_located(locator)
+            )
+            return True
+        except TimeoutException:
+            return False

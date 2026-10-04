@@ -10,7 +10,7 @@ class TestCheckout:
     @pytest.fixture(autouse=True)
     def setup(self, driver):
         login_page = LoginPage(driver)
-        login_page.login(settings.USERNAME, settings.PASSWORD)
+        login_page.login_success(settings.USERNAME, settings.PASSWORD)
 
     @pytest.mark.flaky
     @pytest.mark.smoke
@@ -23,7 +23,7 @@ class TestCheckout:
         cart.checkout()
 
         checkout = CheckoutPage(driver)
-        checkout.fill_info("张", "三", "100000")
+        checkout.fill_info_success("张", "三", "100000")
         checkout.finish()
 
         assert "Thank you" in checkout.get_complete_header()
@@ -54,7 +54,7 @@ class TestCheckout:
         cart.checkout()
 
         checkout = CheckoutPage(driver)
-        checkout.fill_info("张", "三", "100000")
+        checkout.fill_info_success("张", "三", "100000")
         checkout.finish()
 
         assert "Thank you" in checkout.get_complete_header()
@@ -84,9 +84,12 @@ class TestCheckout:
         inventory.go_to_cart()
 
         cart = CartPage(driver)
+        assert cart.is_loaded()
+        cart.wait_item_count(1)
         cart.checkout()
 
         checkout = CheckoutPage(driver)
+        assert checkout.is_loaded()
         checkout.input_text(checkout.FIRST_NAME, "张")
         checkout.input_text(checkout.LAST_NAME, "三")
 

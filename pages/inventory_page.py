@@ -11,15 +11,22 @@ class InventoryPage(BasePage):
     ITEM_NAME = (By.CLASS_NAME, "inventory_item_name")
     ADD_BUTTON = (By.CSS_SELECTOR, "button.btn_inventory")
     CART_BADGE = (By.CLASS_NAME, "shopping_cart_badge")
+    CART_PAGE_MARKER = (By.ID, "checkout")
 
     def is_loaded(self):
-        return self.get_text(self.PAGE_TITLE) == "Products"
+        return self.is_element_present(self.PAGE_TITLE)
 
     def go_to_cart(self):
         self.click(self.CART_LINK)
+        # 点购物车后，等购物车页加载
+        self.find(self.CART_PAGE_MARKER)
 
     def sort_by_price_low_to_high(self):
         Select(self.find(self.SORT_DROPDOWN)).select_by_value("lohi")
+        # 等价格列表变成升序
+        self.wait.until(
+            lambda d: self.get_product_prices() == sorted(self.get_product_prices())
+        )
 
     def get_product_prices(self):
         elements = self.driver.find_elements(*self.PRICE)

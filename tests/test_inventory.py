@@ -3,12 +3,13 @@ from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from config.settings import settings
 from pages.cart_page import CartPage
+
 class TestInventory:
 
     @pytest.fixture(autouse=True)
     def setup(self, driver):
         login_page = LoginPage(driver)
-        login_page.login(settings.USERNAME, settings.PASSWORD)
+        login_page.login_success(settings.USERNAME, settings.PASSWORD)
 
     def test_sort_products(self, driver):
         inventory = InventoryPage(driver)
@@ -28,6 +29,8 @@ class TestInventory:
         inventory.add_to_cart_by_name("Sauce Labs Backpack")
         inventory.add_to_cart_by_name("Sauce Labs Bike Light")
         inventory.go_to_cart()
+
         cart = CartPage(driver)
+        assert cart.is_loaded()
         cart.wait_item_count(2)
         assert cart.get_item_count() == 2

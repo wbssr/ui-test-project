@@ -9,7 +9,7 @@ class TestCart:
     @pytest.fixture(autouse=True)
     def setup(self, driver):
         login_page = LoginPage(driver)
-        login_page.login(settings.USERNAME, settings.PASSWORD)
+        login_page.login_success(settings.USERNAME, settings.PASSWORD)
 
     @pytest.mark.flaky
     @pytest.mark.smoke
@@ -19,6 +19,7 @@ class TestCart:
         inventory.go_to_cart()
 
         cart = CartPage(driver)
+        assert cart.is_loaded()
         cart.wait_item_count(1)
         assert cart.get_item_count() == 1
         cart.remove_item_by_name("Sauce Labs Backpack")

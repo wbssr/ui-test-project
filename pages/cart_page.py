@@ -7,12 +7,15 @@ class CartPage(BasePage):
     CART_ITEM = (By.CLASS_NAME, "cart_item")
     ITEM_NAME = (By.CLASS_NAME, "inventory_item_name")
     REMOVE_BUTTON = (By.CSS_SELECTOR, "button.cart_button")
+    CHECKOUT_PAGE_MARKER = (By.ID, "continue")
 
     def is_loaded(self):
-        return self.get_text(self.PAGE_TITLE) == "Your Cart"
+        return self.is_element_present(self.CHECKOUT_BUTTON)
 
     def checkout(self):
         self.click(self.CHECKOUT_BUTTON)
+        # 点 checkout 后，等结算页加载
+        self.find(self.CHECKOUT_PAGE_MARKER)
 
     def get_item_count(self):
         return len(self.driver.find_elements(*self.CART_ITEM))
