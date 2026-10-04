@@ -58,3 +58,41 @@ class TestCheckout:
         checkout.finish()
 
         assert "Thank you" in checkout.get_complete_header()
+
+    @pytest.mark.regression
+    def test_cancel_checkout_keeps_cart(self, driver):
+        """结账中途取消，购物车商品保留"""
+        inventory = InventoryPage(driver)
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.go_to_cart()
+
+        cart = CartPage(driver)
+        cart.checkout()
+
+        checkout = CheckoutPage(driver)
+        checkout.cancel()
+
+        cart = CartPage(driver)
+        cart.wait_item_count(1)
+        assert cart.get_item_count() == 1
+
+    @pytest.mark.regression
+    def test_form_data_not_persisted_on_refresh(self, driver):
+        """填写信息后刷新，表单数据清空"""
+        inventory = InventoryPage(driver)
+        inventory.add_to_cart_by_name("Sauce Labs Backpack")
+        inventory.go_to_cart()
+
+        cart = CartPage(driver)
+        cart.checkout()
+
+        checkout = CheckoutPage(driver)
+        checkout.input_text(checkout.FIRST_NAME, "张")
+        checkout.input_text(checkout.LAST_NAME, "三")
+
+        # 刷新页面
+        driver.refresh()
+
+        # 验证表单已清空
+        first_name_value = driver.find_element(*checkout.FIRST_NAME).get_attribute("value")
+        assert first_name_value == ""

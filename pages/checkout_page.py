@@ -9,6 +9,7 @@ class CheckoutPage(BasePage):
     CONTINUE_BUTTON = (By.ID, "continue")
     FINISH_BUTTON = (By.ID, "finish")
     COMPLETE_HEADER = (By.CLASS_NAME, "complete-header")
+    CANCEL_BUTTON = (By.ID, "cancel")
 
     def fill_info(self, first, last, postal):
         self.input_text(self.FIRST_NAME, first)
@@ -18,6 +19,9 @@ class CheckoutPage(BasePage):
 
     def finish(self):
         self.click(self.FINISH_BUTTON)
+
+    def cancel(self):
+        self.click(self.CANCEL_BUTTON)
 
     def get_complete_header(self):
         return self.get_text(self.COMPLETE_HEADER)

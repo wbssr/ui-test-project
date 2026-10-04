@@ -33,3 +33,4 @@ class TestCart:
         cart = CartPage(driver)
         # 空购物车点结账应该跳回或提示，这里验证页面可操作
         assert cart.is_loaded()
+

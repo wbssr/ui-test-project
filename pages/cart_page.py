@@ -7,6 +7,7 @@ class CartPage(BasePage):
     CART_ITEM = (By.CLASS_NAME, "cart_item")
     ITEM_NAME = (By.CLASS_NAME, "inventory_item_name")
     REMOVE_BUTTON = (By.CSS_SELECTOR, "button.cart_button")
+
     def is_loaded(self):
         return self.get_text(self.PAGE_TITLE) == "Your Cart"
 
