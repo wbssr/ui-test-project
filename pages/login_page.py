@@ -30,7 +30,7 @@ class LoginPage(BasePage):
 
     def logout(self):
         self.click(self.MENU_BUTTON)
-        self.click(self.LOGOUT_LINK)
+        self.click_visibility(self.LOGOUT_LINK)
         # 登出后等登录页
         self.find(self.USERNAME_INPUT)
 

@@ -64,4 +64,5 @@ class TestLogin:
         # 刷新页面
         driver.refresh()
         inventory = InventoryPage(driver)
+
         assert inventory.get_cart_badge_count() == 0
